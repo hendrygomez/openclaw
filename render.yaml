@@ -2,20 +2,17 @@ services:
   - type: web
     name: openclaw
     runtime: docker
-    plan: starter
+    plan: free  # Cambiado de "starter" a "free"
     healthCheckPath: /health
     envVars:
       - key: PORT
         value: "8080"
       - key: SETUP_PASSWORD
-        sync: false
+        sync: false # prompts during deploy
       - key: OPENCLAW_STATE_DIR
-        value: /data/.openclaw
+        value: /tmp/.openclaw  # Cambiado a /tmp (volátil)
       - key: OPENCLAW_WORKSPACE_DIR
-        value: /data/workspace
+        value: /tmp/workspace  # Cambiado a /tmp (volátil)
       - key: OPENCLAW_GATEWAY_TOKEN
-        generateValue: true
-    disk:
-      name: openclaw-data
-      mountPath: /data
-      sizeGB: 1
+        generateValue: true # auto-generates a secure token
+    # ELIMINADA la sección "disk:" - plan free no tiene almacenamiento persistente
